@@ -1,0 +1,33 @@
+{
+  "folders": [
+    {
+      "name": "Via Carraria",
+      "path": "../"
+    },
+    {
+      "name": "Backend",
+      "path": "../viacarraria-backend"
+    },
+    {
+      "name": "Frontend",
+      "path": "../viacarraria-frontend"
+    },
+    {
+      "name": "Database",
+      "path": "../viacarraria-database"
+    },
+    {
+      "name": "Infrastructure",
+      "path": "../viacarraria-infrastructure"
+    },
+  ],
+  "settings": {
+    "chat.useCustomizationsInParentRepositories": true,
+    "files.exclude": {
+        "viacarraria-backend": true,
+        "viacarraria-frontend": true,
+        "viacarraria-database": true,
+        "viacarraria-infrastructure": true,
+    }
+  }
+}
