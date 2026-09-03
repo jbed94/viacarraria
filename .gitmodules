@@ -10,3 +10,6 @@
 [submodule "viacarraria-database"]
 	path = viacarraria-database
 	url = git@github.com:jbed94/viacarraria-database.git
+[submodule "viacarraria-services"]
+	path = viacarraria-services
+	url = git@github.com:jbed94/viacarraria-services.git

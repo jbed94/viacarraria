@@ -17,16 +17,21 @@
       "path": "../viacarraria-database"
     },
     {
+      "name": "Services",
+      "path": "../viacarraria-services"
+    },
+    {
       "name": "Infrastructure",
       "path": "../viacarraria-infrastructure"
     },
   ],
   "settings": {
-    "chat.useCustomizationsInParentRepositories": true,
+    "chat.useNestedAgentsMdFiles": true,
     "files.exclude": {
         "viacarraria-backend": true,
         "viacarraria-frontend": true,
         "viacarraria-database": true,
+        "viacarraria-services": true,
         "viacarraria-infrastructure": true,
     }
   }
