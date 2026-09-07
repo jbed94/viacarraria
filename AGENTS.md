@@ -42,9 +42,9 @@ The application is structured as a multi-repository monorepo workspace comprisin
 
 ```
 viacarraria/
-├── viacarraria-frontend/       # React + React Flow + Zustand + Framer Motion Canvas UI
-├── viacarraria-backend/        # Node.js (NestJS) API + CASL + Redis + Weaviate Client
-├── viacarraria-database/       # PostgreSQL + Prisma ORM + Directus Admin Panel
+├── viacarraria-frontend/       # React + React Flow + Zustand + Framer Motion Canvas UI & Decoupled Admin Panel
+├── viacarraria-backend/        # Node.js (NestJS) API + CASL + Redis + Weaviate Client + Admin API
+├── viacarraria-database/       # PostgreSQL + Prisma ORM + Migrations & Seeding
 ├── viacarraria-services/       # Python Ingestion Worker (Docling) + TEI Gemma Embeddings
 └── viacarraria-infrastructure/ # Docker Compose + Helm Charts + KEDA / Karpenter Autoscaling
 ```
@@ -53,8 +53,8 @@ viacarraria/
 
 - [docs/application.prompt.md](file:///home/jbed94/Projects/viacarraria/docs/application.prompt.md) — Comprehensive application specification, UX/UI state machine, PLG rules, microservices ingestion pipeline, and agent directives.
 - [viacarraria-backend/AGENTS.md](file:///home/jbed94/Projects/viacarraria/viacarraria-backend/AGENTS.md) — Backend API, Auth, CASL permissions, Rate Limiting, Weaviate integration.
-- [viacarraria-database/AGENTS.md](file:///home/jbed94/Projects/viacarraria/viacarraria-database/AGENTS.md) — Relational & JSONB schemas, Prisma ORM, Directus admin integration, migrations.
-- [viacarraria-frontend/AGENTS.md](file:///home/jbed94/Projects/viacarraria/viacarraria-frontend/AGENTS.md) — React Flow Canvas engine, UX state machine, Framer Motion, Spatial GraphRAG visualization.
+- [viacarraria-database/AGENTS.md](file:///home/jbed94/Projects/viacarraria/viacarraria-database/AGENTS.md) — Relational & JSONB schemas, Prisma ORM, migrations, and template seeding.
+- [viacarraria-frontend/AGENTS.md](file:///home/jbed94/Projects/viacarraria/viacarraria-frontend/AGENTS.md) — React Flow Canvas engine, UX state machine, Framer Motion, Spatial GraphRAG visualization, Decoupled Admin Panel.
 - [viacarraria-services/AGENTS.md](file:///home/jbed94/Projects/viacarraria/viacarraria-services/AGENTS.md) — Python FastStream document parsing worker, Docling engine, TEI Gemma embeddings, dynamic batching.
 - [viacarraria-infrastructure/AGENTS.md](file:///home/jbed94/Projects/viacarraria/viacarraria-infrastructure/AGENTS.md) — Docker Compose local dev topology, Helm K8s manifests, KEDA/Karpenter scale-to-zero, Mamba env, pre-commit config.
 
@@ -92,4 +92,4 @@ All submodules in the monorepo follow strict directory structure and environment
    - Ingestion status updates in Redis (`JOB_<id>:PROGRESS`) and streams to the React UI via WebSockets.
 
 2. **Admin & Content Management**:
-   - Self-hosted Directus panel mounted on PostgreSQL provides CRUD administration, user role edits (`FREE` $\to$ `PRO`), template management (`GraphTemplate`), and JSONB canvas inspection without custom admin backend code.
+   - Decoupled Admin Panel (`viacarraria-frontend/dist-admin`) connecting to backend admin API provides CRUD administration, user role edits (`FREE` $\to$ `PRO`), template management (`GraphTemplate`), retention sweeps, real-time audit logging, and S3 cold storage archives with in-browser inspection.

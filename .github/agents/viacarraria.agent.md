@@ -16,7 +16,7 @@ The system specifications for the application are documented across the root and
 - [AGENTS.md](AGENTS.md) — System root architectural blueprint.
 - [docs/application.prompt.md](docs/application.prompt.md) — Full English application specification, UX/UI requirements, PLG strategy, microservices ingestion pipeline, and agent behavioral directives.
 - [viacarraria-backend/AGENTS.md](viacarraria-backend/AGENTS.md) — Backend API, Auth, CASL permissions, Rate Limiting, and Weaviate integration.
-- [viacarraria-database/AGENTS.md](viacarraria-database/AGENTS.md) — Relational & JSONB schemas, Prisma ORM, database constraints, and Directus admin panel.
+- [viacarraria-database/AGENTS.md](viacarraria-database/AGENTS.md) — Relational & JSONB schemas, Prisma ORM, and database constraints.
 - [viacarraria-frontend/AGENTS.md](viacarraria-frontend/AGENTS.md) — React Flow canvas engine, UX state machine, Framer Motion, and Spatial GraphRAG UI.
 - [viacarraria-services/AGENTS.md](viacarraria-services/AGENTS.md) — FastStream Python workers, Docling engine, TEI Gemma embeddings, and dynamic batching.
 - [viacarraria-infrastructure/AGENTS.md](viacarraria-infrastructure/AGENTS.md) — Docker Compose local dev topology, Helm K8s manifests, and KEDA/Karpenter scale-to-zero autoscaling.

@@ -327,12 +327,13 @@ Helm chart with the following scaling configuration:
 - Horizontal pod autoscaling definitions.
 - Ingress configuration for all services.
 
-### 4.3 Admin Panel (Directus)
+### 4.3 Decoupled Admin Panel & Portal Architecture
 
-- Self-hosted Directus instance mounted on the same PostgreSQL database.
-- Provides CRUD admin UI for: user management, role assignment (`FREE` → `PRO`), graph template management, JSONB graph inspection/editing.
-- In Kubernetes: deployed on a separate subdomain, secured at the ingress level (IP allowlist, basic auth, or SSO).
-- Enables password resets, role changes, and data inspection without custom admin backend code.
+- Dedicated, decoupled administrative frontend (`viacarraria-frontend/dist-admin`) and backend API (`/api/admin/*`).
+- Provides enterprise administration UI: user telemetry & role assignment (`FREE` → `PRO`), graph canvas JSONB inspection & batch maintenance, storage proxy management, real-time audit logging, and automated S3 cold storage archives with in-browser NDJSON inspection.
+- In Kubernetes: isolated behind internal VPN / Tailscale operator routing (`app.kubernetes.io/component: admin`), never exposed to public internet.
+- Zero credential/admin leak into the public user bundle.
+
 
 ---
 

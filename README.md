@@ -6,7 +6,7 @@ tooled submodules:
 
 - `viacarraria-frontend`: React, Vite, React Flow, Zustand, and Biome
 - `viacarraria-backend`: NestJS API and service integrations
-- `viacarraria-database`: Prisma, PostgreSQL migrations, and Directus metadata
+- `viacarraria-database`: Prisma, PostgreSQL migrations, and template seeding
 - `viacarraria-services`: Poetry-based parsing and embedding services
 - `viacarraria-infrastructure`: Docker Compose, Helm, and platform validation
 
