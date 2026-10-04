@@ -1,13 +1,15 @@
 ---
 name: progress-tracking
-description: Skill for updating task progress, checking completed steps, tracking interruptions, and recording execution notes in docs/todo.prompt.md.
+description: >-
+  Skill for updating task progress, checking completed steps, 
+  handling interruptions. Related to docs/todo.prompt.md. 
+  This skill is always used after planning and execution iterations.
+  Load when exact `progress-tracking` skill is needed.
 ---
 
 # Progress Tracking Skill (`progress-tracking`)
 
-This skill defines how to maintain real-time task accuracy in `docs/todo.prompt.md` after each execution iteration.
-
----
+This skill defines how to maintain real-time task accuracy in `docs/todo.prompt.md` after each execution iteration. Never skip updating the progress log, to avoid context degradation.
 
 ## Progress Update Protocol
 
@@ -16,12 +18,22 @@ After an execution iteration completes (or gets interrupted), update `docs/todo.
 ### 1. Update Task Statuses
 - Change completed step checkboxes from `- [ ]` to `- [x]`.
 - An iteration may complete multiple steps across phases. Mark all finished steps.
+- Never check again functionality.
+- Never inspect functionality to check them, they should be checked immediately after execution iteration.
 
 ### 2. Handle Interruption Events
-If an iteration encounters an unexpected situation (e.g., a major blocking bug that cannot be resolved on the fly, or a missing specification requiring user clarification):
+
+Classify the interruption and respond accordingly:
+
+**Fixable interruption** (bug, missing edge case, small dependency issue):
 - Append an entry under `## Dynamic Tasks & Interruption Log` in `docs/todo.prompt.md`.
 - Document the exact blocking issue, reproduction context, and pending decision.
 - Add new sub-task checkboxes to resolve the interruption once unblocked.
+
+**Major refactor required** (fundamentally wrong approach, architectural mismatch, cascading failures after 2+ fix attempts):
+- Do NOT attempt the refactor within the current task scope.
+- Halt execution immediately.
+- Invoke `suggest-next-steps` skill with the refactor framed as the primary follow-up (using `hypothesis`-based format if the task was driven by `agent-problem-solving`).
 
 ### 3. Log Empirical Test Verification
 Append an entry under `## Execution Log & Verification`:
@@ -33,6 +45,8 @@ Append an entry under `## Execution Log & Verification`:
 - **Outcome**: 15 tests passed, 0 failed.
 - **Interruption Status**: None / [Description if interrupted].
 ```
+
+Keep only the **last 3 iteration snapshots** in the Execution Log. When appending a 4th, remove the oldest. The log exists for continuity across iterations, not as history.
 
 ---
 

@@ -1,6 +1,9 @@
 ---
 name: task-planning
-description: Skill for analyzing task requests, gathering context, and generating a structured, persistent task plan in docs/todo.prompt.md.
+description: >-
+  Skill for analyzing task requests, gathering context, 
+  and generating a structured, persistent task plan in docs/todo.prompt.md.
+  Load when exact `task-planning` skill is needed.
 ---
 
 # Task Planning Skill (`task-planning`)
@@ -14,6 +17,8 @@ This skill defines the protocol for context gathering and creating persistent ta
 1. **Deterministic Path**: The task plan MUST ALWAYS be written to `docs/todo.prompt.md` relative to the workspace root. Never create plan files in floating sub-directories or temporary paths.
 2. **Context Gathering**: Read relevant `AGENTS.md` sub-repository documentation and inspect target codebase files before writing plan steps.
 3. **Clean Start**: If a planned task is something new, ensure that `docs/todo.prompt.md` is either created afresh or cleared of previous unrelated content to avoid confusion and maintain a single source of truth. Use terminal commands like `rm docs/todo.prompt.md` to remove the old file if necessary (do not modify with tokens). Keep the `docs/todo.prompt.md` file if current planning is a continuation of the work, a natural next suggestion. Clean if a user prompt to do so, or when previous task is complete and new task is not related (is not incremental or not directly connected with last phase).
+4. **Step Granularity**: Each step should be verifiable independently — small enough to test after completion, large enough to represent a meaningful change. A step that touches more than ~3 files or introduces more than one new concept should be split.
+5. **Existing Pattern Inspection**: Before implementing, identify existing patterns in the target module — file naming, export structure, existing test helpers, shared utilities. Match them. Do not introduce new conventions when established ones exist.
 
 ---
 
@@ -26,10 +31,9 @@ When generating a plan, use this exact structural template, which includes an em
 
 ## Workflow Recap & Execution Protocol
 - **Step 1: Planning**: Analyze request, gather codebase context, write persistent plan to `docs/todo.prompt.md` relative to main directory.
-- **Step 2: Iteration Execution**: Implement typed feature code & tests on first pass. Execute commands via `mamba-run` skill using sub-repo environments (`mamba run -n viacarraria-<subrepo> <command>`). Fail fast if environment draft is misconfigured.
+- **Step 2: Iteration Execution**: Implement typed feature code & tests on first pass. Execute commands via `mamba-run` skill using sub-repo environments (`mamba run -n viacarraria-<subrepo> <command>`). Fail fast if environment is misconfigured.
 - **Step 3: Progress Tracking & Interruption Handling**: Mark completed steps (`[x]`). If interrupted by major bugs or missing specs, append entries to Dynamic Tasks & Interruption Log.
-- **Step 4: Context Release / Refresh**: After each iteration, invoke `context-refresh` skill to persist handoff snapshot in `docs/todo.prompt.md` and free VS Code Copilot context memory via `/clear`.
-- **Step 5: Next Iteration / Completion**: Read `docs/todo.prompt.md` to resume next iteration. Upon plan completion, invoke `suggest-next-steps` skill.
+- **Step 4: Next Iteration / Completion**: Read `docs/todo.prompt.md` to resume next iteration. Upon plan completion, invoke `suggest-next-steps` skill.
 
 ## Objective
 High-level description of what will be implemented and the expected behavior.
@@ -63,9 +67,6 @@ High-level description of what will be implemented and the expected behavior.
 
 ## Execution Log & Verification
 *(Appended after each iteration)*
-
-## Context Handoff Snapshot
-*(Appended during context release)*
 ```
 
 ---

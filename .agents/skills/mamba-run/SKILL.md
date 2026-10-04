@@ -1,6 +1,10 @@
 ---
 name: mamba-run
-description: Skill for executing any sub-repository command (testing, building, linting, formatting, database migrations) wrapped in its specific sub-repository mamba environment.
+description: >
+  Skill for executing any sub-repository command (testing, building, linting, formatting, 
+  database migrations) wrapped in its specific sub-repository mamba environment. 
+  Active when running bash commands.
+  Load when exact `mamba-run` skill is needed.
 ---
 
 # Mamba Execution Skill (`mamba-run`)
@@ -80,3 +84,26 @@ mamba run -n viacarraria-infrastructure helm template ./helm/graph-app
 # Run pre-commit quality hooks
 mamba run -n viacarraria-infrastructure pre-commit run --all-files
 ```
+
+---
+
+# Environment Verification
+
+This skill defines the fail-fast policy for development environment assumptions.
+
+---
+
+## Environment Policy
+
+1. **Pre-Configured Assumption**: The development agent operates under the strict assumption that the environment (compilers, runtimes, Mamba env, Docker containers) is pre-configured by the user.
+2. **NO Self-Healing / Auto-Repair**: NEVER attempt to install missing platform tools, modify system environment packages, or repair broken Docker / database infrastructure on your own unless explicitly tasked to do so by the user prompt.
+
+---
+
+## Action Protocol
+
+If a command fails due to a missing binary (e.g., `command not found: mamba`):
+
+1. **Log Environment Failure**: Extract the exact error message and missing requirement.
+2. **Fail Fast & Break Conversation**: Report the exact missing dependency or environment configuration issue to the user and IMMEDIATELY halt the conversation trajectory.
+3. Do NOT waste tokens trying alternative install scripts or environment workarounds.
